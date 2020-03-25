@@ -1,10 +1,10 @@
 import React from "react";
 import { Fetch } from "react-request";
 import { Spinner } from "react-bootstrap";
-import { Row, Col, Card } from "react-bootstrap";
-import NumberFormat from "react-number-format";
+import { Col, Row, Card } from "react-bootstrap";
 import FatalityRateLabel from "../../components/FatailityRateLabel";
 import sum from "../../lib/sum";
+import SummaryItem from "../SummaryItem";
 
 const Summary = props => {
   return (
@@ -47,65 +47,35 @@ const Summary = props => {
               <Card.Body>
                 <Card.Text>
                   <Row>
-                    <Col style={{ textAlign: "center" }}>
-                      <span className="numbers" style={{ color: "#4271b3" }}>
-                        <i className="fas fa-clipboard-list"></i>
-                        <br />
-                        <NumberFormat
-                          value={sum(data.map(item => item.cases))}
-                          thousandSeparator={true}
-                          displayType={"text"}
-                        />
-                      </span>
-                      <br /> Total Cases
+                    <Col className="text-center">
+                      <SummaryItem
+                        dataType="cases"
+                        value={sum(data.map(item => item.cases))}
+                      />
                     </Col>
-                    <Col style={{ textAlign: "center" }}>
-                      <span className="numbers" style={{ color: "#6ee6a4" }}>
-                        <i className="fas fa-file-medical-alt"></i>
-                        <br />
-                        <NumberFormat
-                          value={sum(data.map(item => item.recovered))}
-                          thousandSeparator={true}
-                          displayType={"text"}
-                        />
-                      </span>
-                      <br /> Recovered
+                    <Col className="text-center">
+                      <SummaryItem
+                        dataType="recovered"
+                        value={sum(data.map(item => item.recovered))}
+                      />
                     </Col>
-                    <Col style={{ textAlign: "center" }}>
-                      <span className="numbers" style={{ color: "#f0d318" }}>
-                        <i className="fas fa-heartbeat"></i>
-                        <br />
-                        <NumberFormat
-                          value={sum(data.map(item => item.active))}
-                          thousandSeparator={true}
-                          displayType={"text"}
-                        />
-                      </span>
-                      <br /> Active
+                    <Col className="text-center">
+                      <SummaryItem
+                        dataType="active"
+                        value={sum(data.map(item => item.active))}
+                      />
                     </Col>
-                    <Col style={{ textAlign: "center" }}>
-                      <span className="numbers" style={{ color: "#f5972c" }}>
-                        <i className="fas fa-procedures"></i>
-                        <br />
-                        <NumberFormat
-                          value={sum(data.map(item => item.critical))}
-                          thousandSeparator={true}
-                          displayType={"text"}
-                        />
-                      </span>
-                      <br /> Serious
+                    <Col className="text-center">
+                      <SummaryItem
+                        dataType="cases"
+                        value={sum(data.map(item => item.critical))}
+                      />
                     </Col>
-                    <Col style={{ textAlign: "center" }}>
-                      <span className="numbers" style={{ color: "#ff3030" }}>
-                        <i className="fas fa-book-dead"></i>
-                        <br />
-                        <NumberFormat
-                          value={sum(data.map(item => item.deaths))}
-                          thousandSeparator={true}
-                          displayType={"text"}
-                        />
-                      </span>
-                      <br /> Deceased
+                    <Col className="text-center">
+                      <SummaryItem
+                        dataType="deaths"
+                        value={sum(data.map(item => item.deaths))}
+                      />
                     </Col>
                   </Row>
                 </Card.Text>

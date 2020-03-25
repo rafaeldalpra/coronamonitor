@@ -1,9 +1,9 @@
 import React from "react";
 import { Fetch } from "react-request";
 import { Spinner } from "react-bootstrap";
-import { Row, Col, Card } from "react-bootstrap";
-import NumberFormat from "react-number-format";
+import { Col, Row, Card } from "react-bootstrap";
 import FatalityRateLabel from "../../components/FatailityRateLabel";
+import SummaryItem from "../SummaryItem";
 
 const SummaryByCountry = ({
   addToFavourites,
@@ -57,65 +57,23 @@ const SummaryByCountry = ({
                 <Card.Body>
                   <Card.Text>
                     <Row>
-                      <Col style={{ textAlign: "center" }}>
-                        <span className="numbers" style={{ color: "#4271b3" }}>
-                          <i className="fas fa-clipboard-list"></i>
-                          <br />
-                          <NumberFormat
-                            value={data.cases}
-                            thousandSeparator={true}
-                            displayType={"text"}
-                          />
-                        </span>
-                        <br /> Total Cases
+                      <Col className="text-center">
+                        <SummaryItem dataType="cases" value={data.cases} />
                       </Col>
-                      <Col style={{ textAlign: "center" }}>
-                        <span className="numbers" style={{ color: "#6ee6a4" }}>
-                          <i className="fas fa-file-medical-alt"></i>
-                          <br />
-                          <NumberFormat
-                            value={data.recovered}
-                            thousandSeparator={true}
-                            displayType={"text"}
-                          />
-                        </span>
-                        <br /> Recovered
+                      <Col className="text-center">
+                        <SummaryItem
+                          dataType="recovered"
+                          value={data.recovered}
+                        />
                       </Col>
-                      <Col style={{ textAlign: "center" }}>
-                        <span className="numbers" style={{ color: "#f0d318" }}>
-                          <i className="fas fa-heartbeat"></i>
-                          <br />
-                          <NumberFormat
-                            value={data.active}
-                            thousandSeparator={true}
-                            displayType={"text"}
-                          />
-                        </span>
-                        <br /> Active
+                      <Col className="text-center">
+                        <SummaryItem dataType="active" value={data.active} />
                       </Col>
-                      <Col style={{ textAlign: "center" }}>
-                        <span className="numbers" style={{ color: "#f5972c" }}>
-                          <i className="fas fa-procedures"></i>
-                          <br />
-                          <NumberFormat
-                            value={data.critical}
-                            thousandSeparator={true}
-                            displayType={"text"}
-                          />
-                        </span>
-                        <br /> Serious
+                      <Col className="text-center">
+                        <SummaryItem dataType="cases" value={data.critical} />
                       </Col>
-                      <Col style={{ textAlign: "center" }}>
-                        <span className="numbers" style={{ color: "#ff3030" }}>
-                          <i className="fas fa-book-dead"></i>
-                          <br />
-                          <NumberFormat
-                            value={data.deaths}
-                            thousandSeparator={true}
-                            displayType={"text"}
-                          />
-                        </span>
-                        <br /> Deceased
+                      <Col className="text-center">
+                        <SummaryItem dataType="deaths" value={data.deaths} />
                       </Col>
                     </Row>
                   </Card.Text>

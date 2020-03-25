@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { Fetch } from "react-request";
 import { Spinner } from "react-bootstrap";
 import { Row, Col, Card, Table } from "react-bootstrap";
-import NumberFormat from "react-number-format";
 import SorterIcon from "../../components/SorterIcon";
 import sum from "../../lib/sum";
+import SummaryItem from "../SummaryItem";
+import CountryRow from "./CountryRow";
 
 const Today = props => {
   const [sorter, setSorter] = useState("todayDeaths");
@@ -41,51 +41,27 @@ const Today = props => {
               <Card.Body>
                 <Card.Text>
                   <Row>
-                    <Col style={{ textAlign: "center" }}>
-                      <span className="numbers" style={{ color: "#4271b3" }}>
-                        <i className="fas fa-plus-square"></i>
-                        <br />
-                        <NumberFormat
-                          value={sum(data.map(item => item.todayCases))}
-                          thousandSeparator={true}
-                          displayType={"text"}
-                        />
-                      </span>
-                      <br />
-                      <i style={{ color: "#4271b3" }}>
-                        +
-                        {Number(
+                    <Col className="text-center">
+                      <SummaryItem
+                        dataType="cases"
+                        value={sum(data.map(item => item.todayCases))}
+                        increase={Number(
                           (sum(data.map(item => item.todayCases)) /
                             sum(data.map(item => item.cases))) *
                             100
                         ).toFixed(2)}
-                        %
-                      </i>
-                      <br />
-                      Cases
+                      />
                     </Col>
-                    <Col style={{ textAlign: "center" }}>
-                      <span className="numbers" style={{ color: "#ff3030" }}>
-                        <i className="fas fa-book-dead"></i>
-                        <br />
-                        <NumberFormat
-                          value={sum(data.map(item => item.todayDeaths))}
-                          thousandSeparator={true}
-                          displayType={"text"}
-                        />
-                      </span>
-                      <br />
-                      <i style={{ color: "#ff3030" }}>
-                        +
-                        {Number(
+                    <Col className="text-center">
+                      <SummaryItem
+                        dataType="deaths"
+                        value={sum(data.map(item => item.todayDeaths))}
+                        increase={Number(
                           (sum(data.map(item => item.todayDeaths)) /
                             sum(data.map(item => item.deaths))) *
                             100
                         ).toFixed(2)}
-                        %
-                      </i>
-                      <br />
-                      Deceased
+                      />
                     </Col>
                     <Col>
                       <Table responsive size="sm">
@@ -110,51 +86,7 @@ const Today = props => {
                         </thead>
                         <tbody>
                           {sortedData.map(item => (
-                            <tr>
-                              <td>
-                                <Link to={{ pathname: `/${item.country}` }}>
-                                  {item.country}
-                                </Link>{" "}
-                                <small>
-                                  (
-                                  <small style={{ color: "#4271b3" }}>
-                                    +
-                                    {Number(
-                                      (Number(item.todayCases) /
-                                        Number(item.cases)) *
-                                        100
-                                    ).toFixed(1)}
-                                    %
-                                  </small>{" "}
-                                  <small style={{ color: "#ff3030" }}>
-                                    +
-                                    {Number(
-                                      (Number(item.todayDeaths) /
-                                        Number(item.deaths)) *
-                                        100
-                                    ).toFixed(1)}
-                                    %
-                                  </small>
-                                  )
-                                </small>
-                              </td>
-                              <td
-                                style={{
-                                  textAlign: "center",
-                                  color: "#4271b3"
-                                }}
-                              >
-                                {item.todayCases}
-                              </td>
-                              <td
-                                style={{
-                                  textAlign: "center",
-                                  color: "#ff3030"
-                                }}
-                              >
-                                <strong>{item.todayDeaths}</strong>
-                              </td>
-                            </tr>
+                            <CountryRow item={item} />
                           ))}
                         </tbody>
                       </Table>

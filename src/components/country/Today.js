@@ -1,10 +1,10 @@
 import React from "react";
 import { Fetch } from "react-request";
 import { Spinner } from "react-bootstrap";
-import { Row, Col, Card } from "react-bootstrap";
-import NumberFormat from "react-number-format";
+import { Col, Row, Card } from "react-bootstrap";
+import SummaryItem from "../SummaryItem";
 
-const TodayByCountry = ({ countryCode }) => {
+const TodayByCountry = ({ countryCode, removeDivider }) => {
   return (
     <Card className="card card-default card-demo">
       <Fetch url={`https://corona.lmao.ninja/countries/${countryCode}`}>
@@ -35,50 +35,23 @@ const TodayByCountry = ({ countryCode }) => {
                 <Card.Body>
                   <Card.Text>
                     <Row>
-                      <Col style={{ textAlign: "center" }}>
-                        <span className="numbers" style={{ color: "#4271b3" }}>
-                          <i className="fas fa-plus-square"></i>
-                          <br />
-                          <NumberFormat
-                            value={data.todayCases}
-                            thousandSeparator={true}
-                            displayType={"text"}
-                          />
-                        </span>
-                        <br />
-                        <i style={{ color: "#4271b3" }}>
-                          +
-                          {Number((data.todayCases / data.cases) * 100).toFixed(
-                            1
-                          )}
-                          %
-                        </i>
-                        <br /> Cases
+                      <Col className="text-center">
+                        <SummaryItem
+                          dataType="cases"
+                          value={data.todayCases}
+                          increase={Number(
+                            (data.todayCases / data.cases) * 100
+                          ).toFixed(1)}
+                        />
                       </Col>
-                      <Col
-                        className="lg-divider"
-                        style={{
-                          textAlign: "center"
-                        }}
-                      >
-                        <span className="numbers" style={{ color: "#ff3030" }}>
-                          <i className="fas fa-book-dead"></i>
-                          <br />
-                          <NumberFormat
-                            value={data.todayDeaths}
-                            thousandSeparator={true}
-                            displayType={"text"}
-                          />
-                        </span>
-                        <br />
-                        <i style={{ color: "#ff3030" }}>
-                          +
-                          {Number(
+                      <Col className="text-center lg-divider">
+                        <SummaryItem
+                          dataType="deaths"
+                          value={data.todayDeaths}
+                          increase={Number(
                             (data.todayDeaths / data.deaths) * 100
                           ).toFixed(1)}
-                          %
-                        </i>
-                        <br /> Deceased
+                        />
                       </Col>
                     </Row>
                   </Card.Text>
